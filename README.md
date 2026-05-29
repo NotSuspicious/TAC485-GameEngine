@@ -2,6 +2,8 @@
 
 A Q*bert clone built on a custom C++20 engine using SDL3 GPU. Play as a muskrat, hop around a 28-cube pyramid to flip every tile to the activated color, and dodge the bouncing red balls and the snake that hatches from an egg.
 
+https://github.com/user-attachments/assets/5b8d6dfb-4ad0-4d06-95b2-172624986ceb
+
 ## Controls
 
 | Key | Action |
