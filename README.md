@@ -22,14 +22,14 @@ Land on every cube to win. Falling off the pyramid respawns you at the top. Gett
 ## 1. Download
 
 ```sh
-git clone <your-repo-url> tac485-final
-cd tac485-final
+git clone git@github.com:NotSuspicious/TAC485-GameEngine.git
+cd TAC485-GameEngine
 ```
 
 The repo layout is:
 
 ```
-tac485-final/
+TAC485-GameEngine/
 ├── README.md           ← this file
 ├── Qbert/              ← project root (CMakeLists.txt lives here)
 │   ├── Engine/         ← engine static library
@@ -53,9 +53,69 @@ All external dependencies (SDL3 + SDL3_shadercross, rapidjson, stb, sse2neon) ar
 
 > **Important:** The working directory when launching the game must contain the `Assets/` and `Shaders/` folders (the executable loads them by relative path). The instructions below all set that up correctly.
 
+Now pick one of the following options to build and run the game:
+
+* **§2** — CLion (Mac and Windows) — *recommended for fastest setup*
+* **§3** — Visual Studio 2022 (Windows)
+* **§4** — Terminal / command line (Mac, Linux, or Windows)
+
 ---
 
-## 2. Build & Run — Terminal
+## 2. Build & Run — CLion (Mac and Windows)
+
+1. **Open the project.** Launch CLion → **File → Open…** → select the `Qbert/` folder (the one with the top-level `CMakeLists.txt`, *not* the repo root). CLion auto-detects the CMake project.
+2. **Pick a toolchain:**
+   * **macOS:** CLion's default Xcode/Clang toolchain is fine.
+   * **Windows:** open **Settings → Build, Execution, Deployment → Toolchains** and select **Visual Studio** (amd64). CLion will use MSVC.
+3. **Wait for CMake reload.** CLion populates the `Debug` and `Release` profiles automatically (matching the existing `cmake-build-debug/` directory).
+4. **Set the run configuration's working directory.** This is the most important step — without it, the game can't find its assets.
+   * **Run → Edit Configurations… → Game**
+   * Set **Working directory** to `$ProjectFileDir$` (the `Qbert/` folder).
+   * Set **Executable** to the `Game` target (CLion may pre-fill this).
+5. **Build & Run:** click the green hammer to build, then the green ▶ to run. Use the bug icon to debug with breakpoints.
+
+> If you see "failed to load Assets/…" at startup, double-check that the working directory in your Run config is the `Qbert/` folder.
+
+---
+
+## 3. Build & Run — Visual Studio 2022 (Windows)
+
+Two equally valid workflows. Use whichever you prefer.
+
+### Option A — "Open Folder" mode (uses `CMakeSettings.json`, recommended)
+
+1. **Open Visual Studio 2022 → Open a local folder → select `Qbert/`.** VS reads the included `CMakeSettings.json` and configures the `x64-Debug` Ninja profile automatically.
+2. Wait for the "CMake generation finished" message in the Output pane.
+3. In the toolbar's **Startup Item** dropdown, choose **`Game.exe`**.
+4. **Set the working directory:** right-click `CMakeLists.txt` in Solution Explorer → **Debug and Launch Settings → Game** → in the generated `launch.vs.json`, add:
+   ```json
+   "currentDir": "${projectDir}"
+   ```
+   to the `Game.exe` configuration. Save.
+5. **Press `F5`** (or click the green ▶) to build and run with the debugger attached. **`Ctrl+F5`** runs without the debugger. **`Ctrl+Shift+B`** builds without running.
+
+### Option B — Generated `.sln` (classic VS solution)
+
+If you'd rather use a normal Visual Studio solution:
+
+1. Open the **x64 Native Tools Command Prompt for VS 2022**.
+2. From the repo root:
+   ```cmd
+   cd Qbert
+   cmake -S . -B build-vs -G "Visual Studio 17 2022" -A x64
+   ```
+3. Open `Qbert\build-vs\Game.sln` in Visual Studio.
+4. In **Solution Explorer**, right-click the **Game** project → **Set as Startup Project**.
+5. Right-click **Game** → **Properties → Configuration Properties → Debugging**. Set:
+   * **Working Directory:** `$(ProjectDir)..\..` (this should resolve to the `Qbert/` folder so `Assets/` is reachable).
+   * **Command:** leave as `$(TargetPath)` (default).
+6. Press **`F5`** to build and run.
+
+CMake's post-build step copies `SDL3.dll`, `SDL3_shadercross.dll`, and `dxcompiler.dll` next to `Game.exe` automatically, so no manual DLL juggling is required.
+
+---
+
+## 4. Build & Run — Terminal
 
 ### macOS / Linux
 
@@ -101,60 +161,6 @@ cmake -S . -B out\build\x64-Debug -G Ninja -DCMAKE_BUILD_TYPE=Debug
 cmake --build out\build\x64-Debug --target Game
 .\out\build\x64-Debug\Game\Game.exe
 ```
-
----
-
-## 3. Build & Run — CLion (Mac and Windows)
-
-1. **Open the project.** Launch CLion → **File → Open…** → select the `Qbert/` folder (the one with the top-level `CMakeLists.txt`, *not* the repo root). CLion auto-detects the CMake project.
-2. **Pick a toolchain:**
-   * **macOS:** CLion's default Xcode/Clang toolchain is fine.
-   * **Windows:** open **Settings → Build, Execution, Deployment → Toolchains** and select **Visual Studio** (amd64). CLion will use MSVC.
-3. **Wait for CMake reload.** CLion populates the `Debug` and `Release` profiles automatically (matching the existing `cmake-build-debug/` directory).
-4. **Set the run configuration's working directory.** This is the most important step — without it, the game can't find its assets.
-   * **Run → Edit Configurations… → Game**
-   * Set **Working directory** to `$ProjectFileDir$` (the `Qbert/` folder).
-   * Set **Executable** to the `Game` target (CLion may pre-fill this).
-5. **Build & Run:** click the green hammer to build, then the green ▶ to run. Use the bug icon to debug with breakpoints.
-
-> If you see "failed to load Assets/…" at startup, double-check that the working directory in your Run config is the `Qbert/` folder.
-
----
-
-## 4. Build & Run — Visual Studio 2022 (Windows)
-
-Two equally valid workflows. Use whichever you prefer.
-
-### Option A — "Open Folder" mode (uses `CMakeSettings.json`, recommended)
-
-1. **Open Visual Studio 2022 → Open a local folder → select `Qbert/`.** VS reads the included `CMakeSettings.json` and configures the `x64-Debug` Ninja profile automatically.
-2. Wait for the "CMake generation finished" message in the Output pane.
-3. In the toolbar's **Startup Item** dropdown, choose **`Game.exe`**.
-4. **Set the working directory:** right-click `CMakeLists.txt` in Solution Explorer → **Debug and Launch Settings → Game** → in the generated `launch.vs.json`, add:
-   ```json
-   "currentDir": "${projectDir}"
-   ```
-   to the `Game.exe` configuration. Save.
-5. **Press `F5`** (or click the green ▶) to build and run with the debugger attached. **`Ctrl+F5`** runs without the debugger. **`Ctrl+Shift+B`** builds without running.
-
-### Option B — Generated `.sln` (classic VS solution)
-
-If you'd rather use a normal Visual Studio solution:
-
-1. Open the **x64 Native Tools Command Prompt for VS 2022**.
-2. From the repo root:
-   ```cmd
-   cd Qbert
-   cmake -S . -B build-vs -G "Visual Studio 17 2022" -A x64
-   ```
-3. Open `Qbert\build-vs\Game.sln` in Visual Studio.
-4. In **Solution Explorer**, right-click the **Game** project → **Set as Startup Project**.
-5. Right-click **Game** → **Properties → Configuration Properties → Debugging**. Set:
-   * **Working Directory:** `$(ProjectDir)..\..` (this should resolve to the `Qbert/` folder so `Assets/` is reachable).
-   * **Command:** leave as `$(TargetPath)` (default).
-6. Press **`F5`** to build and run.
-
-CMake's post-build step copies `SDL3.dll`, `SDL3_shadercross.dll`, and `dxcompiler.dll` next to `Game.exe` automatically, so no manual DLL juggling is required.
 
 ---
 
