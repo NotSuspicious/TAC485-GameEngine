@@ -1,9 +1,6 @@
 # TAC 485 Spring 2026 — Final: Q*bert
 
-Name: William Zhao
-Email: wzhao029@usc.edu
-
-A Q*bert clone built on a custom C++20 engine using SDL3 GPU. Play as the muskrat, hop around the 28-cube pyramid to flip every tile to the activated color, and dodge the bouncing red balls and the snake that hatches from the SnakeSphere.
+A Q*bert clone built on a custom C++20 engine using SDL3 GPU. Play as a muskrat, hop around a 28-cube pyramid to flip every tile to the activated color, and dodge the bouncing red balls and the snake that hatches from an egg.
 
 ## Controls
 
