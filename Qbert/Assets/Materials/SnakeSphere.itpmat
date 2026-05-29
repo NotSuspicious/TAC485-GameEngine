@@ -1,0 +1,13 @@
+{
+    "metadata": {
+        "type": "itpmat",
+        "version": 1
+    },
+    "shader": "Phong",
+    "textures": [
+        "Assets/Textures/LightWhite.png"
+    ],
+    "diffuseColor": [ 1.0, 0.294, 0.376 ],
+    "specularColor": [ 1.0, 0.294, 0.376 ],
+    "specularPower": 10.0
+}

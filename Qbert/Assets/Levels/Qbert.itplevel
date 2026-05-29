@@ -1,0 +1,147 @@
+{
+  "metadata": {
+    "type": "itplevel",
+    "version": 3
+  },
+  "camera": {
+    "position": [
+      -800.0,
+      600.0,
+      -400.0
+    ],
+    "rotation": [
+      0.0,
+      0.0,
+      -0.259,
+      0.966
+    ]
+  },
+  "lightingData": {
+    "ambient": [
+      0.2,
+      0.2,
+      0.2
+    ]
+  },
+  "qbertColors": {
+    "primary": [
+      0.1,
+      0.1,
+      0.8
+    ],
+    "secondary": [
+      0.7,
+      0.7,
+      0.7
+    ],
+    "activated": [
+      0.4,
+      0.8,
+      0.4
+    ]
+  },
+  "actors": [
+    {
+      "position": [
+        0.0,
+        0.0,
+        50.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        1.0,
+        0.0
+      ],
+      "scale": 1.0,
+      "mesh": "Assets/Meshes/Muskrat.itpmesh3",
+      "components": [
+        {
+          "type": "Player",
+          "skeleton": "Assets/Anims/Muskrat.itpskel",
+          "animations": [
+            [
+              "idle",
+              "Assets/Anims/Muskrat_Idle.itpanim2"
+            ],
+            [
+              "jump",
+              "Assets/Anims/Muskrat_Jump.itpanim2"
+            ],
+            [
+              "land",
+              "Assets/Anims/Muskrat_Land.itpanim2"
+            ],
+            [
+              "fall",
+              "Assets/Anims/Muskrat_Fall.itpanim2"
+            ],
+            [
+              "win",
+              "Assets/Anims/Muskrat_Win.itpanim2"
+            ],
+            [
+              "die",
+              "Assets/Anims/Muskrat_Death.itpanim2"
+            ]
+          ]
+        },
+        {
+          "type": "FollowCam",
+          "offset": [
+            -600.0,
+            300.0,
+            300.0
+          ],
+          "center": [
+            0.0,
+            0.0,
+            -100.0
+          ],
+          "yawSpeed": 3.0,
+          "pitchSpeed": 2.0,
+          "minElevation": -10.0,
+          "maxElevation": 80.0
+        },
+        {
+          "type": "CollisionBox",
+          "min": [
+            -25.0,
+            -25.0,
+            0.0
+          ],
+          "max": [
+            25.0,
+            25.0,
+            50.0
+          ]
+        }
+      ]
+    },
+    {
+      "position": [
+        -450.0,
+        -450.0,
+        5500.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "components": [
+        {
+          "type": "PointLight",
+          "lightColor": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "innerRadius": 5000.0,
+          "outerRadius": 10000.0
+        }
+      ]
+    }
+  ]
+}

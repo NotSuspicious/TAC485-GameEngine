@@ -1,0 +1,13 @@
+{
+    "metadata": {
+        "type": "itpmat",
+        "version": 1
+    },
+    "shader": "Skinned",
+    "textures": [
+        "Assets/Textures/Muskrat.png"
+    ],
+    "diffuseColor": [ 0.8, 0.8, 0.8 ],
+    "specularColor": [ 0.4, 0.4, 0.4 ],
+    "specularPower": 1.0
+}
